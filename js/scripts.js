@@ -1,6 +1,6 @@
 window.onload = function() { init() };
 var public_spreadsheet_url = config.mySheet;;
-var sections = [];
+var chapters = [];
 var sheet = []
 var mychapter = []
 var mysection = []
@@ -13,13 +13,20 @@ function init() {
 function showInfo(data, tabletop) {
   sheet = data;
   for(i=0; i<data.length; i++){
-    // console.log(data[i].element);
+    
     //adds parsed chapterid values to secitons array
-    sections.push(parseInt(data[i].chapterid));
+    chapters.push(data[i].chaptername);
   }
   //prints sections to console; underscore method
-  // console.log(_.uniq(sections));
+  chapters = _.uniq(chapters);
+  listChapters(chapters);
   listSheet(sheet);
+}
+
+function listChapters(chapters){
+  for(i=0;i<chapters.length;i++){
+    $(".contentdiv").append("<h3>"+chapters[i]+"</h3>");
+  }
 }
 
 function listSheet(sheet){
@@ -27,7 +34,7 @@ function listSheet(sheet){
     switch(sheet[i].type){
       
       case "Heading 1":
-      $(".contentdiv").append("<h1>"+sheet[i].element+"</h1>");
+      $(".contentdiv").append("<a name='#"+sheet[i].element.replace(/ /g,"_")+"'></a><h1>"+sheet[i].element+"</h1>");
       break;
 
       case "Heading 2":
@@ -55,6 +62,10 @@ function listSheet(sheet){
 
       case "Video Caption":
       $(".contentdiv").append("<p><em>"+sheet[i].element+"</p></em>");
+      break;
+
+      case "Glossary Item":
+      $(".contentdiv").append("<h3>"+sheet[i].element+"</h3>");
       break;
 
       default:
