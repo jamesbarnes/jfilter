@@ -68,6 +68,10 @@ function listSheet(sheet){
       $(".contentdiv").append("<h3>"+sheet[i].element+"</h3>");
       break;
 
+      case "Intro Text":
+      $(".contentdiv").append("<p class='summary'>"+sheet[i].element+"</p>");
+      break;
+
       default:
       $(".contentdiv").append("<p>"+sheet[i].element+"</p>");
       break;
