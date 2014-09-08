@@ -15,14 +15,14 @@ function showInfo(data, tabletop) {
   sheet = data;
   for(i=0; i<data.length; i++){
     
-    //adds parsed chapterid values to secitons array
+    //adds parsed chapter values to chapters array
     chapters.push(data[i].chaptername);
   }
-  //prints sections to console; underscore method
+  //prints sections to console; underscore method to filter only unique values
   chapters = _.uniq(chapters);
   listChapters(chapters);
 
-  listSheet(sheet);
+  // listSheet(sheet);
 }
 
 function listChapters(chapters){
@@ -47,7 +47,7 @@ function selectChapter(chapter,sheet){
   listSheet(mysection);
 }
 
-
+//renders/styles the selected chapter(s)
 function listSheet(sheet){
   $(".contentdiv").html('');
 
