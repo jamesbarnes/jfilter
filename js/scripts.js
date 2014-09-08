@@ -1,9 +1,10 @@
 window.onload = function() { init() };
+
 var public_spreadsheet_url = config.mySheet;;
 var chapters = [];
 var sheet = []
 var mychapter = []
-var mysection = []
+
 function init() {
   Tabletop.init( { key: public_spreadsheet_url,
                    callback: showInfo,
@@ -20,19 +21,43 @@ function showInfo(data, tabletop) {
   //prints sections to console; underscore method
   chapters = _.uniq(chapters);
   listChapters(chapters);
+
   listSheet(sheet);
 }
 
 function listChapters(chapters){
   for(i=0;i<chapters.length;i++){
-    $(".contentdiv").append("<h3>"+chapters[i]+"</h3>");
+    $("#menu").append("<li><a href='#' class='chapter'>"+chapters[i]+"</a></li>");
   }
+  $('#menu').slicknav();
+  $(".slicknav_nav > li a").click(function(){
+  var chap = $(this).text();
+  selectChapter(chap.replace(/ /g,"_"),sheet);
+  });
 }
 
+
+function selectChapter(chapter,sheet){
+  var mysection = []
+  for(i=0;i<sheet.length;i++){
+    if(sheet[i].chaptername.replace(/ /g,"_")==chapter){
+      mysection.push(sheet[i]);
+    }
+  }
+  listSheet(mysection);
+}
+
+
 function listSheet(sheet){
+  $(".contentdiv").html('');
+
   for(i=0;i<sheet.length;i++){
     switch(sheet[i].type){
       
+      case "Chapter":
+      $(".contentdiv").append("<a name='"+sheet[i].element.replace(/ /g,"_")+"'></a><h1>"+sheet[i].element+"</h1>");
+      break;
+
       case "Heading 1":
       $(".contentdiv").append("<a name='#"+sheet[i].element.replace(/ /g,"_")+"'></a><h1>"+sheet[i].element+"</h1>");
       break;
@@ -57,7 +82,7 @@ function listSheet(sheet){
       break;
 
       case "Video":
-      $(".contentdiv").append("<iframe width='853' height='480' src='"+sheet[i].element+"' frameborder='0' allowfullscreen></iframe>");
+      $(".contentdiv").append(sheet[i].embed);
       break;
 
       case "Video Caption":

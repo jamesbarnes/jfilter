@@ -1,0 +1,25 @@
+.slicknav_menu {
+  display:none;
+}
+
+@media screen and (max-width: 400em) {
+  .js #menu {
+    display:none;
+  }
+  
+  .js .slicknav_menu {
+    margin: 0 -15px;
+    display:block;
+    position:fixed;
+    width: 100%;
+    top: 0;
+  }
+}
+
+body {
+  padding-top: 40px;
+}
+
+#nav{
+  position:fixed;
+}
